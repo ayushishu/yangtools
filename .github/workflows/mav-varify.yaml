@@ -1,29 +1,32 @@
----
-name: Gerrit Composed Maven Verify
+name: maven-verify
 
-# yamllint disable-line rule:truthy
 on:
   push:
     branches:
       - main
       - master
 
+env:
+  ODLNEXUSPROXY: ${{ vars.NEXUSPROXY }}
+  NEXUSPROXY: ${{ vars.NEXUSPROXY }}
 jobs:
-  maven-verify:
-    # use compose-jjb-verify from the v0.4 series of releng-reusable-workflows
-    # yamllint disable-line rule:line-length
-    uses: lfit/releng-reusable-workflows/.github/workflows/compose-maven-verify.yaml@main
-    with:
-      GERRIT_BRANCH: ${{ inputs.GERRIT_BRANCH }}
-      GERRIT_CHANGE_ID: ${{ inputs.GERRIT_CHANGE_ID }}
-      GERRIT_CHANGE_NUMBER: ${{ inputs.GERRIT_CHANGE_NUMBER }}
-      GERRIT_CHANGE_URL: ${{ inputs.GERRIT_CHANGE_URL }}
-      GERRIT_EVENT_TYPE: ${{ inputs.GERRIT_EVENT_TYPE }}
-      GERRIT_PATCHSET_NUMBER: ${{ inputs.GERRIT_PATCHSET_NUMBER }}
-      GERRIT_PATCHSET_REVISION: ${{ inputs.GERRIT_PATCHSET_REVISION }}
-      GERRIT_PROJECT: ${{ inputs.GERRIT_PROJECT }}
-      GERRIT_REFSPEC: ${{ inputs.GERRIT_REFSPEC }}
-      JDK_VERSION: "17"
-      MVN_VERSION: "3.8.3"
-      MVN_PROFILES: "docker"
-      ENV_VARS: ${{ toJSON(vars) }}
+
+    maven-verify:    
+        uses: lfit/releng-reusable-workflows/.github/workflows/compose-maven-verify.yaml@main
+        with:
+            GERRIT_BRANCH: "main"
+            GERRIT_CHANGE_ID: "your_change_id"
+            GERRIT_CHANGE_NUMBER: "your_change_number"
+            GERRIT_CHANGE_URL: "https://git.opendaylight.org/gerrit/aaa"
+            GERRIT_EVENT_TYPE: "change-merged"
+            GERRIT_PATCHSET_NUMBER: "1"
+            GERRIT_PATCHSET_REVISION: "your_revision_sha"
+            GERRIT_PROJECT: "https://git.opendaylight.org/gerrit/aaa"
+            GERRIT_REFSPEC: "refs/changes/1/1/1"
+            JDK_VERSION: "17"
+            MVN_VERSION: "3.8.3"
+            MVN_PHASES: "clean,install"
+            MVN_POM_FILE: "pom.xml"
+            MVN_PROFILES: ""
+            ENV_VARS: ${{ toJSON(vars) }}
+            ENV_SECRETS: "{}"
