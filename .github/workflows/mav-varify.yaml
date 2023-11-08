@@ -6,9 +6,9 @@ on:
       - main
       - master
 
-# env:
-#   ODLNEXUSPROXY: ${{ vars.NEXUSPROXY }}
-#   NEXUSPROXY: ${{ vars.NEXUSPROXY }}
+env:
+  ODLNEXUSPROXY: ${{ vars.NEXUSPROXY }}
+  NEXUSPROXY: ${{ vars.NEXUSPROXY }}
 jobs:
 
     maven-verify:    
