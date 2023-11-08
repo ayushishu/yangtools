@@ -6,9 +6,9 @@ on:
       - main
       - master
 
-env:
-  ODLNEXUSPROXY: ${{ vars.NEXUSPROXY }}
-  NEXUSPROXY: ${{ vars.NEXUSPROXY }}
+# env:
+#   ODLNEXUSPROXY: ${{ vars.NEXUSPROXY }}
+#   NEXUSPROXY: ${{ vars.NEXUSPROXY }}
 jobs:
 
     maven-verify:    
@@ -28,5 +28,5 @@ jobs:
             MVN_PHASES: "clean,install"
             MVN_POM_FILE: "pom.xml"
             MVN_PROFILES: ""
-            ENV_VARS: "{}"
+            ENV_VARS: ${{ toJSON(vars) }}
             ENV_SECRETS: "{}"
